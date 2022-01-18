@@ -25,6 +25,8 @@ class GameController:
 
     # public:
     def run(self):
+        """to start the whole game!"""
+
         ## music
         pygame.mixer.music.load("./music/ArticBeat.wav")
         pygame.mixer.music.set_volume(.15)
