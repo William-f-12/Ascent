@@ -2,6 +2,7 @@
 
 import pygame
 
+
 class Flyer:
 
     def __init__(self, image, y, x, speed, num):
@@ -17,14 +18,12 @@ class Flyer:
             else:
                 self.__toplefts.append([x - i * image.get_width(), y])
 
-
-
     def move(self, *args):
         """let the flyer moves"""
 
         for i in range(self.__num):
             self.__toplefts[i][0] -= self.__speed
-        
+
         if self.__toplefts[0][0] <= self.__x and self.__speed > 0:
             new_topleft = [self.__toplefts[-1][0] + self.__image.get_width(), self.__y]
             self.__toplefts.append(new_topleft)
@@ -33,7 +32,6 @@ class Flyer:
             new_topleft = [self.__toplefts[-1][0] - self.__image.get_width(), self.__y]
             self.__toplefts.append(new_topleft)
             del self.__toplefts[0]
-
 
     def draw(self, screen):
         """draw the flyer"""

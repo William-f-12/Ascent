@@ -1,7 +1,8 @@
 #! python3.8 - game controller class for the game
 #  the main file to run
 
-import pygame, sys
+import sys
+import pygame
 from pygame import *
 from Static_Value import StaticValue
 from Character import Character
@@ -9,6 +10,7 @@ from Timer import Timer
 
 pygame.init()
 SV = StaticValue()
+
 
 class GameController:
 
@@ -19,61 +21,55 @@ class GameController:
 
         # private:
         self.__boy = Character()
-        self.__tiemr = Timer()
+        self.__timer = Timer()
         self.__level = SV.Level_1
-
 
     # public:
     def run(self):
         """to start the whole game!"""
 
-        ## music
+        # music
         pygame.mixer.music.load("./music/ArticBeat.wav")
         pygame.mixer.music.set_volume(.15)
-        pygame.mixer.music.play(-1,0.0)
-
+        pygame.mixer.music.play(-1, 0.0)
 
         while True:
-             ## event handler
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    self.__terminate()
-                elif event.type == KEYDOWN:
-                    if event.key == K_ESCAPE:
-                        self.__terminate()
-                    if (event.key == K_LEFT or event.key == K_a):
+            # event handler
+            for Event in pygame.event.get():
+                if Event.type == QUIT:
+                    terminate()
+                elif Event.type == KEYDOWN:
+                    if Event.key == K_ESCAPE:
+                        terminate()
+                    if Event.key == K_LEFT or Event.key == K_a:
                         self.__boy.left = True
-                    elif (event.key == K_RIGHT or event.key == K_d):
+                    elif Event.key == K_RIGHT or Event.key == K_d:
                         self.__boy.right = True
-                    elif (event.key == K_SPACE or event.key == K_w or event.key == K_UP):
+                    elif Event.key == K_SPACE or Event.key == K_w or Event.key == K_UP:
                         self.__boy.jump = True
-                elif event.type == KEYUP:
-                    if (event.key == K_LEFT or event.key == K_a):
+                elif Event.type == KEYUP:
+                    if Event.key == K_LEFT or Event.key == K_a:
                         self.__boy.left = False
-                    elif (event.key == K_RIGHT or event.key == K_d):
+                    elif Event.key == K_RIGHT or Event.key == K_d:
                         self.__boy.right = False
-                    elif (event.key == K_SPACE or event.key == K_w or event.key == K_UP):
+                    elif Event.key == K_SPACE or Event.key == K_w or Event.key == K_UP:
                         self.__boy.jump = False
 
-
-            ## update status
-            self.__tiemr.count()
+            # update status
+            self.__timer.count()
             self.__boy.update(self.__level.ground(self.__boy.rect.midbottom[0]))
 
-
-            ## draw all images
-            self.DISPLAYSURF.fill((0,0,50))
+            # draw all images
+            self.DISPLAYSURF.fill((0, 0, 50))
             self.__level.draw(self.DISPLAYSURF, self.__boy)
             self.__boy.draw(self.DISPLAYSURF)
             pygame.display.update()
             SV.FPSCLOCK.tick(SV.FPS)
 
 
-    # private:
-    def __terminate(self):
-        pygame.quit()
-        sys.exit()
-
+def terminate():
+    pygame.quit()
+    sys.exit()
 
 
 if __name__ == "__main__":

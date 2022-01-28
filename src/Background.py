@@ -2,9 +2,10 @@
 
 import pygame
 
+
 class Background:
 
-    def __init__(self, image, topleft, speed, left_limit, right_limit, ifY = 1):
+    def __init__(self, image, topleft, speed, left_limit, right_limit, ifY=1):
         """
         image: pygame image, topleft: list of the topleft position of the image,
         speed: the speed the image move, 
@@ -19,22 +20,20 @@ class Background:
         self.__rightLimit = right_limit
         self.__ifY = ifY
 
-
     def move(self, x, y):
         """move the picture"""
 
-        if self.__topleft[0] >= self.__rightLimit[0] and self.__topleft[0] <= self.__leftLimit[0]:
+        if self.__rightLimit[0] <= self.__topleft[0] <= self.__leftLimit[0]:
             self.__topleft[0] += self.__speed * x
             self.__topleft[1] += self.__speed * y * self.__ifY
         elif self.__topleft[0] < self.__rightLimit[0]:
-                self.__topleft[0] = self.__rightLimit[0]
-                self.__topleft[1] = self.__rightLimit[1]
+            self.__topleft[0] = self.__rightLimit[0]
+            self.__topleft[1] = self.__rightLimit[1]
         elif self.__topleft[0] > self.__leftLimit[0]:
             self.__topleft[0] = self.__leftLimit[0]
             self.__topleft[1] = self.__leftLimit[1]
 
-
     def draw(self, screen):
         """draw the picture"""
-        
+
         screen.blit(self.__image, self.__topleft)

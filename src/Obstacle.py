@@ -2,8 +2,8 @@
 
 import pygame
 
+
 class Obstacle:
 
     def __init__(self, image):
         self.__image = image
-        

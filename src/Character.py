@@ -5,12 +5,13 @@ from Static_Value import StaticValue
 
 SV = StaticValue()
 
+
 class Character:
 
     def __init__(self):
         # private:
-        self.__img = {  "Stand":pygame.image.load(SV.LOCATION + "character.png"),
-                        }
+        self.__img = {"Stand": pygame.image.load(SV.LOCATION + "character.png"),
+                      }
         self.__rect = pygame.Rect(528, 350, 32, 32)
         self.__speed = 2
         self.__yspeed = 0
@@ -23,7 +24,6 @@ class Character:
         self.__isLeft = False
         self.__status = "Stand"
         # status: Stand, Run, Jump
-
 
     def update(self, obstacle):
         self.checkStand(obstacle)
@@ -52,19 +52,16 @@ class Character:
             self.__jumpTime = self.__jumpMax
             self.__yspeed = 0
 
-
     def img_correct(self):
         cor_x = 528 - self.__rect.left
         self.__rect.left = 528
         return cor_x
-
 
     def draw(self, DISPLAYSURF):
         if self.__isLeft:
             DISPLAYSURF.blit(pygame.transform.flip(self.__img[self.__status], True, False), self.__rect)
         else:
             DISPLAYSURF.blit(self.__img[self.__status], self.__rect)
-
 
     def checkStand(self, obstacle_top):
         if self.__rect.bottom == obstacle_top:
@@ -75,42 +72,38 @@ class Character:
         else:
             self.__isStand = False
 
-
     @property
     def rect(self):
         return self.__rect
-
 
     @property
     def left(self):
         return self.__left
 
     @left.setter
-    def left(self, value:bool):
+    def left(self, value: bool):
         if value:
             self.__left = True
         else:
             self.__left = False
-
 
     @property
     def right(self):
         return self.__right
 
     @right.setter
-    def right(self, value:bool):
+    def right(self, value: bool):
         if value:
             self.__right = True
         else:
             self.__right = False
-
 
     @property
     def jump(self):
         return self.__jump
 
     @jump.setter
-    def jump(self, value:bool):
+    def jump(self, value: bool):
         if value:
             self.__jump = True
         else:
