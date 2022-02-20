@@ -1,8 +1,5 @@
 #! python3.8 - background class for the game
 
-import pygame
-
-
 class Background:
 
     def __init__(self, image, topleft, speed, left_limit, right_limit, ifY=1):

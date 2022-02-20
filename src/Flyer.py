@@ -1,6 +1,5 @@
 #! python3.8 - flyer class for the game
 
-import pygame
 
 
 class Flyer:

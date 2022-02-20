@@ -1,5 +1,8 @@
 #! python3.8 - game controller class for the game
-#  the main file to run
+# @project: Ascent
+# @author:  William Lu
+
+__author__ = "William Lu"
 
 import sys
 import pygame
@@ -23,6 +26,7 @@ class GameController:
         self.__boy = Character()
         self.__timer = Timer()
         self.__level = SV.Level_1
+        self.__ObsList = SV.Obs_list
 
     # public:
     def run(self):
@@ -39,8 +43,8 @@ class GameController:
                 if Event.type == QUIT:
                     terminate()
                 elif Event.type == KEYDOWN:
-                    if Event.key == K_ESCAPE:
-                        terminate()
+                    # if Event.key == K_ESCAPE:
+                    #     terminate()
                     if Event.key == K_LEFT or Event.key == K_a:
                         self.__boy.left = True
                     elif Event.key == K_RIGHT or Event.key == K_d:
@@ -57,7 +61,7 @@ class GameController:
 
             # update status
             self.__timer.count()
-            self.__boy.update(self.__level.ground(self.__boy.rect.midbottom[0]))
+            self.__boy.update(self.__level.ground(self.__boy.rect.midbottom[0]), self.__ObsList.all)
 
             # draw all images
             self.DISPLAYSURF.fill((0, 0, 50))

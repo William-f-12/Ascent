@@ -10,9 +10,9 @@ class Character:
 
     def __init__(self):
         # private:
-        self.__img = {"Stand": pygame.image.load(SV.LOCATION + "character.png"),
+        self.__img = {"Stand": pygame.image.load(SV.LOCATION + "character_2.png"),
                       }
-        self.__rect = pygame.Rect(528, 350, 32, 32)
+        self.__rect = pygame.Rect(528, 350, 42, 42)
         self.__speed = 2
         self.__yspeed = 0
         self.__jumpMax = 20
@@ -22,11 +22,17 @@ class Character:
         self.__jump = False
         self.__isStand = False
         self.__isLeft = False
-        self.__status = "Stand"
-        # status: Stand, Run, Jump
+        self.__status = "Stand" # status: Stand, Run, Jump
 
-    def update(self, obstacle):
-        self.checkStand(obstacle)
+    def update(self, obstacle, obs_list):
+        """
+        update the character state in the game
+        this function is very complex, I don't even want to explain
+        """
+
+        # check if the character is standing first
+        self.checkStand(obstacle, obs_list)
+
         # move left or right
         if self.__left:
             self.__isLeft = True
@@ -47,10 +53,28 @@ class Character:
                 self.__rect.top += self.__yspeed
                 self.__jumpTime = 0
             self.__jumpTime -= 1
-            self.checkStand(obstacle)
+            self.checkStand(obstacle, obs_list)
         if self.__isStand and (self.__jumpTime != self.__jumpMax or self.__yspeed != 0):
             self.__jumpTime = self.__jumpMax
             self.__yspeed = 0
+
+        # check character's interaction with obstacles
+        for obs in obs_list:
+            if self.__rect.colliderect(obs.rect):
+                if self.__rect.centery < obs.rect.top:
+                    self.__rect.bottom = obs.rect.top
+                elif self.__rect.centery > obs.rect.bottom:
+                    self.rect.top = obs.rect.bottom
+                    self.__jumpTime = 0
+                    self.__yspeed = 0
+                    # TODO: fix the bug, he can move while jump and right
+                    if self.__isStand:
+                        self.__rect.left -= self.__speed
+                elif self.__rect.centerx < obs.rect.left:
+                    self.__rect.right = obs.rect.left
+                elif self.__rect.centerx > obs.rect.right:
+                    self.__rect.left = obs.rect.right
+                break
 
     def img_correct(self):
         cor_x = 528 - self.__rect.left
@@ -63,18 +87,33 @@ class Character:
         else:
             DISPLAYSURF.blit(self.__img[self.__status], self.__rect)
 
-    def checkStand(self, obstacle_top):
+    def checkStand(self, obstacle_top, obs_list):
         if self.__rect.bottom == obstacle_top:
             self.__isStand = True
+            return
         elif self.__rect.bottom > obstacle_top:
             self.__isStand = True
             self.__rect.bottom = obstacle_top
-        else:
-            self.__isStand = False
+            return
+        for obs in obs_list:
+            if self.__rect.colliderect(obs.rect):
+                if self.__rect.centery < obs.rect.top:
+                    self.__isStand = True
+                    self.__rect.bottom = obs.rect.top
+                    return
+        self.__isStand = False
 
     @property
     def rect(self):
         return self.__rect
+
+    @property
+    def isStand(self):
+        return self.__isStand
+
+    @isStand.setter
+    def isStand(self, value: bool):
+        self.__isStand = value
 
     @property
     def left(self):
