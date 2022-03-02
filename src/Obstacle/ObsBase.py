@@ -2,8 +2,6 @@
 
 import abc
 
-import pygame.draw
-
 
 class ObsBase(metaclass=abc.ABCMeta):
 
@@ -13,10 +11,6 @@ class ObsBase(metaclass=abc.ABCMeta):
         self.__leftLimit = leftLimit
         self.__rightLimit = rightLimit
         self.__rect = self.init_rect(pos)
-
-    def draw(self, DISPLAYSURF):
-        DISPLAYSURF.blit(self.__image, self.__pos)
-        pygame.draw.rect(DISPLAYSURF, (0, 0, 0), self.__rect)
 
     def move(self, x, y):
         """move the picture"""
@@ -43,6 +37,14 @@ class ObsBase(metaclass=abc.ABCMeta):
         """update the rect position"""
 
         pass
+
+    @property
+    def image(self):
+        return self.__image
+
+    @property
+    def pos(self):
+        return self.__pos
 
     @property
     def rect(self):

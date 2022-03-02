@@ -11,7 +11,6 @@ from Static_Value import StaticValue
 from Character import Character
 from Timer import Timer
 
-pygame.init()
 SV = StaticValue()
 
 
@@ -27,13 +26,14 @@ class GameController:
         self.__timer = Timer()
         self.__level = SV.Level_1
         self.__ObsList = SV.Obs_list
+        self.__CosList = SV.Co_list
 
     # public:
     def run(self):
         """to start the whole game!"""
 
         # music
-        pygame.mixer.music.load("./music/ArticBeat.wav")
+        pygame.mixer.music.load("../music/ArticBeat.wav")
         pygame.mixer.music.set_volume(.15)
         pygame.mixer.music.play(-1, 0.0)
 
@@ -43,8 +43,8 @@ class GameController:
                 if Event.type == QUIT:
                     terminate()
                 elif Event.type == KEYDOWN:
-                    # if Event.key == K_ESCAPE:
-                    #     terminate()
+                    if Event.key == K_ESCAPE:
+                        terminate()
                     if Event.key == K_LEFT or Event.key == K_a:
                         self.__boy.left = True
                     elif Event.key == K_RIGHT or Event.key == K_d:
@@ -61,12 +61,15 @@ class GameController:
 
             # update status
             self.__timer.count()
-            self.__boy.update(self.__level.ground(self.__boy.rect.midbottom[0]), self.__ObsList.all)
+            self.__boy.update(self.__level.ground(self.__boy.rect.midbottom[0]), self.__ObsList.all, self.__CosList.all)
 
             # draw all images
             self.DISPLAYSURF.fill((0, 0, 50))
             self.__level.draw(self.DISPLAYSURF, self.__boy)
+            SV.draw_obs(self.DISPLAYSURF)
+            SV.draw_co(self.DISPLAYSURF)
             self.__boy.draw(self.DISPLAYSURF)
+            draw_UI(self.DISPLAYSURF, self.__boy.coNums)
             pygame.display.update()
             SV.FPSCLOCK.tick(SV.FPS)
 
@@ -74,6 +77,14 @@ class GameController:
 def terminate():
     pygame.quit()
     sys.exit()
+
+
+def draw_UI(screen, gem):
+    """display information to players"""
+
+    # TODO: to have an ui class display better ui
+    point = SV.FONT.render("POINTS: " + str(gem), True, (250, 250, 250))
+    screen.blit(point, (900, 550))
 
 
 if __name__ == "__main__":

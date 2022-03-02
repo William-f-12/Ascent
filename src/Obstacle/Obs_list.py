@@ -9,9 +9,10 @@ class Obs_list:
         for obs in self.__Obs_list:
             obs.move(x, y)
 
-    def draw(self, DISPLAYSURF):
-        for obs in self.__Obs_list:
-            obs.draw(DISPLAYSURF)
+    def draw(self, *args):
+        # obs will be drawn by other part of program
+        # this function is just needed to be here though it does nothing
+        pass
 
     @property
     def all(self):

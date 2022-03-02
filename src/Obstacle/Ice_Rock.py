@@ -1,5 +1,4 @@
 #! python3.8 - Obstacle: ice rock
-from abc import ABC
 
 import pygame
 from src.Obstacle.ObsBase import ObsBase
