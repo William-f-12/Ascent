@@ -5,8 +5,10 @@ import abc
 
 class CoBase:
 
-    def __init__(self, image, pos, leftLimit, rightLimit):
-        self.__image = image
+    img = None
+    sound = None
+
+    def __init__(self, pos, leftLimit, rightLimit):
         self.__pos = pos
         self.__leftLimit = leftLimit
         self.__rightLimit = rightLimit
@@ -36,10 +38,6 @@ class CoBase:
     def init_point(self):
         """set the point for the collector"""
         pass
-
-    @property
-    def image(self):
-        return self.__image
 
     @property
     def pos(self):

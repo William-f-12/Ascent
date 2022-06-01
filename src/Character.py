@@ -8,17 +8,17 @@ SV = StaticValue()
 
 class Character:
 
+    __img = {"Stand": pygame.image.load(SV.LOCATION + "character_stand.png"),
+             "Run": pygame.image.load(SV.LOCATION + "character_stand.png"),
+             "Jump": pygame.image.load(SV.LOCATION + "character_stand.png"),
+             "Fall": pygame.image.load(SV.LOCATION + "character_stand.png"), }
+
     def __init__(self):
-        # private:
-        self.__img = {"Stand": pygame.image.load(SV.LOCATION + "character_2.png"),
-                      "Run": pygame.image.load(SV.LOCATION + "character_2.png"),
-                      "Jump": pygame.image.load(SV.LOCATION + "character_2.png"),
-                      "Fall": pygame.image.load(SV.LOCATION + "character_2.png"), }
         self.__rect = pygame.Rect(528, 350, 42, 42)
         self.__speed = 2
         self.__yspeed = 0
         self.__jumpMax = 20
-        self.__jumpTime = self.__jumpMax
+        self.__jumpTime = 20
         self.__left = False
         self.__right = False
         self.__jump = False
@@ -26,11 +26,12 @@ class Character:
         self.__isLeft = False
         self.__status = "Stand"  # status: Stand, Run, Jump, Fall
         self.__coNums = 0
+        self.__hp = 3
 
     def update(self, obstacle, obs_list, cos_list):
         """
         update the character state in the game
-        this function is very complex, I don't even want to explain
+        this function is very complex, I don't even want to explain it
         """
 
         # check if the character is standing first
@@ -88,6 +89,7 @@ class Character:
         for co in cos_list:
             if self.__rect.colliderect(co.rect):
                 cos_list.remove(co)
+                co.sound.play()
                 self.__coNums += co.point
 
     def img_correct(self):
@@ -118,6 +120,12 @@ class Character:
                     return
         self.__isStand = False
 
+    def loseHp(self):
+        """player lose one hp"""
+
+        if self.__hp >= 1:
+            self.__hp -= 1
+
     @property
     def rect(self):
         return self.__rect
@@ -125,6 +133,10 @@ class Character:
     @property
     def coNums(self):
         return self.__coNums
+
+    @property
+    def hp(self):
+        return self.__hp
 
     @property
     def isStand(self):

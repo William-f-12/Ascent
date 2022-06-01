@@ -5,8 +5,9 @@ import abc
 
 class ObsBase(metaclass=abc.ABCMeta):
 
-    def __init__(self, image, pos, leftLimit, rightLimit):
-        self.__image = image
+    img = None
+
+    def __init__(self, pos, leftLimit, rightLimit):
         self.__pos = pos
         self.__leftLimit = leftLimit
         self.__rightLimit = rightLimit
@@ -37,10 +38,6 @@ class ObsBase(metaclass=abc.ABCMeta):
         """update the rect position"""
 
         pass
-
-    @property
-    def image(self):
-        return self.__image
 
     @property
     def pos(self):

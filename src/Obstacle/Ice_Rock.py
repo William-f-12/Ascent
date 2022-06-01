@@ -7,6 +7,8 @@ from src.Obstacle.ObsBase import ObsBase
 class Ice_Rock(ObsBase):
     """use the image iceRock.png"""
 
+    img = pygame.image.load("../img/iceRock.png")
+
     def init_rect(self, pos):
         """initialize the rect for ice rock"""
 
