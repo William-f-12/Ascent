@@ -1,6 +1,6 @@
 #! python3.8 - game controller class for the game
 # @project: Ascent
-# @author:  William Lu :)
+# @author:  William Lu
 
 __author__ = "William Lu"
 
