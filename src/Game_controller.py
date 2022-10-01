@@ -213,16 +213,16 @@ class GameController:
         screen.blit(point, (882, 525))
 
     # run the game:
-    def run(self, level):
+    def run(self):
         """to start the whole game!"""
 
         # initialize level
         boy = Character()
-        if level == 1:
+        if self.__levelChose == 1:
             self.initLevel1()
-        if level == 2:
+        if self.__levelChose == 2:
             self.initLevel1()
-        if level == 3:
+        if self.__levelChose == 3:
             self.initLevel1()
 
         # music
@@ -285,11 +285,8 @@ class GameController:
         self.startScreen()
         while True:
             self.levelChooseScreen()
-            self.run(self.__levelChose)
+            self.run()
             self.endScreen()
-            # break
-
-        # terminate()
 
 
 def terminate():

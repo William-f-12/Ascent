@@ -22,6 +22,7 @@ class StaticValue:
         self.FPS = 60  # frame per second
         self.FPSCLOCK = pygame.time.Clock()
 
+        # level 1
         self.L1_BACKGROUND = None
         self.endpoint = None
         self.Level_1 = None
@@ -29,8 +30,6 @@ class StaticValue:
         self.Obs_list = None
         self.L1_FRONTGROUND = None
         self.L1_COULD = None
-
-        # level 1
         # self.setLevel1()
 
     def setLevel1(self):
